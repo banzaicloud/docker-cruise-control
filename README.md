@@ -1,4 +1,4 @@
-# Kafka-cruise-control
+# Kafka-Cruise-control
 
 This repo is based on [solsson/dockerfiles](https://github.com/solsson/dockerfiles) repo.
 
