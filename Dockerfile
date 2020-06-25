@@ -1,5 +1,5 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.6_10-slim
-ARG VERSION=2.4.2
+FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-slim
+ARG VERSION=2.4.9
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates
 RUN git clone -b ${VERSION} https://github.com/linkedin/cruise-control.git
@@ -21,7 +21,7 @@ RUN npm install
 RUN npm run build
 
 # The container is made to work with github.com/Yolean/kubernetes-kafka, so we try to use a common base
-FROM adoptopenjdk/openjdk11:jdk-11.0.6_10-slim@sha256:b8fb00e5d5a2b263e4ea2fc75333c8da4e74bcfabd7d329eecf5f6547f8efb7f
+FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-slim@sha256:4be4fd9966eb1a6223320bffb4939ae3719383a31e0799d2000f84348cd9fba7
 ARG SOURCE_REF
 ARG SOURCE_TYPE
 ARG DOCKERFILE_PATH
