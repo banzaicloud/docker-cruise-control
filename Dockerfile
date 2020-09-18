@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-slim
-ARG VERSION=2.5.11
+ARG VERSION=2.5.13
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates
 RUN git clone -b ${VERSION} https://github.com/linkedin/cruise-control.git
