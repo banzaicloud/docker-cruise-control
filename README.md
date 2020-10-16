@@ -1,7 +1,5 @@
-# Kafka-Cruise-control
+# Kafka Cruise Control
 
 This repo is based on [solsson/dockerfiles](https://github.com/solsson/dockerfiles) repo.
 
-
-LinkedIn Cruise Control manager for Kafka. This image includes the Cruise Control application.
-It includes the metrics reporter jar at `/opt/cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar`.
+This image bundles the Cruise Control application including the metrics reporter available at `/opt/cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar`.
