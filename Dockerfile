@@ -36,7 +36,7 @@ RUN \
   && npm run build
 
 FROM adoptopenjdk:11.0.8_10-jre-hotspot
-ENV CRUISE_CONTROL_LIBS=/var/lib/cruise-control-ext-libs
+ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
   set -xe; \
