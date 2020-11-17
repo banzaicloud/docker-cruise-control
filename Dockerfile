@@ -1,5 +1,5 @@
-FROM adoptopenjdk:11.0.8_10-jdk-hotspot as cruisecontrol
-ARG VERSION=2.5.19
+FROM adoptopenjdk:11.0.9_11-jdk-hotspot as cruisecontrol
+ARG VERSION=2.5.23
 WORKDIR /
 USER root
 RUN \
@@ -35,7 +35,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM adoptopenjdk:11.0.8_10-jre-hotspot
+FROM adoptopenjdk:11.0.9_11-jre-hotspot
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
