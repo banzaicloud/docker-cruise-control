@@ -1,5 +1,5 @@
 FROM adoptopenjdk:11.0.10_9-jdk-hotspot as cruisecontrol
-ARG VERSION=2.5.34
+ARG VERSION=2.5.37
 WORKDIR /
 USER root
 RUN \
