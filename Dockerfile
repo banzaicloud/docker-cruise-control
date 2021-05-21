@@ -1,5 +1,5 @@
-FROM adoptopenjdk:11.0.10_9-jdk-hotspot as cruisecontrol
-ARG VERSION=2.5.37
+FROM adoptopenjdk:11.0.11_9-jdk-hotspot as cruisecontrol
+ARG VERSION=2.5.53
 WORKDIR /
 USER root
 RUN \
@@ -21,7 +21,7 @@ RUN \
   && mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar \
     /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
 
-FROM node:14.15.5-buster as cruisecontrol-ui
+FROM node:14.17.0-buster as cruisecontrol-ui
 ARG BRANCH=master
 ARG REF=68cef78f2b74af37cb252a2489708e75d1917dd5
 WORKDIR /
@@ -37,7 +37,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM adoptopenjdk:11.0.10_9-jre-hotspot
+FROM adoptopenjdk:11.0.11_9-jre-hotspot
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
