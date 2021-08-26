@@ -1,5 +1,5 @@
 FROM adoptopenjdk:11.0.11_9-jdk-hotspot as cruisecontrol
-ARG VERSION=2.5.53
+ARG VERSION=2.5.68
 WORKDIR /
 USER root
 RUN \
@@ -21,9 +21,9 @@ RUN \
   && mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar \
     /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
 
-FROM node:14.17.0-buster as cruisecontrol-ui
+FROM node:14.17.5-buster as cruisecontrol-ui
 ARG BRANCH=master
-ARG REF=68cef78f2b74af37cb252a2489708e75d1917dd5
+ARG REF=0102593e169a2eed6dd3980b81aa7ab71af2d868
 WORKDIR /
 RUN \
   set -xe; \
