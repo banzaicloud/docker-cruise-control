@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11.0.11_9-jdk-hotspot as cruisecontrol
+FROM eclipse-temurin:11.0.13_8-jdk as cruisecontrol
 ARG VERSION=2.5.75
 WORKDIR /
 USER root
@@ -37,7 +37,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM adoptopenjdk:11.0.11_9-jre-hotspot
+FROM eclipse-temurin:11.0.13_8-jre
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
