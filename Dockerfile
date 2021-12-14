@@ -23,13 +23,11 @@ RUN \
 
 FROM node:16.13.0-buster as cruisecontrol-ui
 ARG BRANCH=master
-ARG REF=0102593e169a2eed6dd3980b81aa7ab71af2d868
+ARG REF=9cd00072d94729aa5ea5cc9f09bd2876ba43ce38
 WORKDIR /
 RUN \
   set -xe; \
   git clone \
-    --branch ${BRANCH} \
-    --depth 1 \
     https://github.com/linkedin/cruise-control-ui.git \
   && cd cruise-control-ui \
   && git checkout ${REF} \
