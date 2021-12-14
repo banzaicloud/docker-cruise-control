@@ -2,7 +2,7 @@ name: Docker
 on:
   push:
     branches:
-      - master
+      - '*'
     tags:
       - "[0-9].[0-9]+.[0-9]+*"
   # pull_request:
@@ -49,6 +49,6 @@ jobs:
           tags: ghcr.io/banzaicloud/cruise-control:${{ steps.imagetag.outputs.value }}
           file: Dockerfile
           platforms: ${{ env.PLATFORMS }}
-          push: true
+          push: ${{ github.ref_type == 'tag' || github.ref_name == 'master' }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
