@@ -1,5 +1,5 @@
 FROM eclipse-temurin:11.0.13_8-jdk as cruisecontrol
-ARG VERSION=2.5.78
+ARG VERSION=2.5.79
 WORKDIR /
 USER root
 RUN \
