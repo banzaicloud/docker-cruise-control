@@ -1,5 +1,5 @@
 FROM eclipse-temurin:11.0.13_8-jdk as cruisecontrol
-ARG VERSION=2.5.79
+ARG VERSION=2.5.80
 WORKDIR /
 USER root
 RUN \
@@ -21,9 +21,9 @@ RUN \
   && mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar \
     /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
 
-FROM node:16.13.0-buster as cruisecontrol-ui
+FROM node:16.13-buster as cruisecontrol-ui
 ARG BRANCH=master
-ARG REF=9cd00072d94729aa5ea5cc9f09bd2876ba43ce38
+ARG REF=0096bb22511a2a9a5ebae903db8c965137672ff0
 WORKDIR /
 RUN \
   set -xe; \
