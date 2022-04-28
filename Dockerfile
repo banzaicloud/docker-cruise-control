@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.14.1_1-jdk as cruisecontrol
+FROM eclipse-temurin:11.0.15_10-jdk as cruisecontrol
 ARG VERSION=2.5.86
 WORKDIR /
 USER root
