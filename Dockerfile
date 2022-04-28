@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.14.1_1-jdk as cruisecontrol
+FROM eclipse-temurin:11.0.15_10-jdk as cruisecontrol
 ARG VERSION=2.5.86
 WORKDIR /
 USER root
@@ -35,7 +35,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM eclipse-temurin:11.0.14.1_1-jre
+FROM eclipse-temurin:11.0.15_10-jre
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
