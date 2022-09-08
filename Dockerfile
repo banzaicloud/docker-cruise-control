@@ -1,5 +1,5 @@
-FROM eclipse-temurin:11.0.15_10-jdk as cruisecontrol
-ARG VERSION=2.5.86
+FROM eclipse-temurin:11.0.16.1_1-jdk as cruisecontrol
+ARG VERSION=2.5.101
 WORKDIR /
 USER root
 RUN \
@@ -23,7 +23,7 @@ RUN \
 
 FROM node:16.14-buster as cruisecontrol-ui
 ARG BRANCH=master
-ARG REF=6d04dc6f3c790141e6dd9a506fb020b51a23de07
+ARG REF=7a6cb4cb50e113245d18a9759c85a4074bccb3e2
 WORKDIR /
 RUN \
   set -xe; \
@@ -35,7 +35,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM eclipse-temurin:11.0.15_10-jre
+FROM eclipse-temurin:11.0.16.1_1-jre
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
