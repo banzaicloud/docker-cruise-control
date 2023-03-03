@@ -1,5 +1,5 @@
-FROM eclipse-temurin:11.0.16.1_1-jdk as cruisecontrol
-ARG VERSION=2.5.101
+FROM eclipse-temurin:17.0.6_10-jdk as cruisecontrol
+ARG CRUISE_CONTROL_VERSION
 WORKDIR /
 USER root
 RUN \
@@ -10,7 +10,7 @@ RUN \
 RUN \
   set -xe; \
   git clone \
-    --branch ${VERSION} \
+    --branch ${CRUISE_CONTROL_VERSION} \
     --depth 1 \
     https://github.com/linkedin/cruise-control.git \
   && cd cruise-control \
@@ -21,21 +21,20 @@ RUN \
   && mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar \
     /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
 
-FROM node:16.14-buster as cruisecontrol-ui
-ARG BRANCH=master
-ARG REF=7a6cb4cb50e113245d18a9759c85a4074bccb3e2
+FROM node:18.14-buster as cruisecontrol-ui
+ARG CRUISE_CONTROL_UI_GIT_REF
 WORKDIR /
 RUN \
   set -xe; \
   git clone \
     https://github.com/linkedin/cruise-control-ui.git \
   && cd cruise-control-ui \
-  && git checkout ${REF} \
+  && git checkout ${CRUISE_CONTROL_UI_GIT_REF} \
   && git rev-parse HEAD \
   && npm install \
   && npm run build
 
-FROM eclipse-temurin:11.0.16.1_1-jre
+FROM eclipse-temurin:17.0.6_10-jre
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
