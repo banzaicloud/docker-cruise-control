@@ -4,6 +4,9 @@ SHELL = /usr/bin/env bash -o pipefail
 PROJECT_DIR := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 CRUISE_CONTROL_VERSION := 2.5.113
 CRUISE_CONTROL_UI_GIT_REF := b1208a6f020c21ff967297814c2e893eed3f3183
+DOCKER_COMPOSE_PROJECT_NAME := "docker-cruise-control"
+DOCKER_COMPOSE_PROJECT_DIR := "./deploy"
+DOCKER_COMPOSE_TIMEOUT := 120
 
 ##@ General
 
@@ -21,4 +24,26 @@ build: ## Build Cruise Control container image
 		-t ghcr.io/banzaicloud/cruise-control:$(CRUISE_CONTROL_VERSION) \
 		.
 
+.PHONY: up
+up: ## Start test environment
+	@docker compose \
+       		--project-name "$(DOCKER_COMPOSE_PROJECT_NAME)" \
+       		--project-directory "$(DOCKER_COMPOSE_PROJECT_DIR)" \
+       		up -d \
+       		--remove-orphans \
+       		--timeout "$(DOCKER_COMPOSE_TIMEOUT)" \
+       		--wait
 
+.PHONY: down
+down: ## Stop test environment
+	@docker compose \
+			--project-name "$(DOCKER_COMPOSE_PROJECT_NAME)" \
+			--project-directory "$(DOCKER_COMPOSE_PROJECT_DIR)" \
+			down \
+			--remove-orphans \
+			--volumes \
+			--timeout "$(DOCKER_COMPOSE_TIMEOUT)"
+
+.PHONY: test
+test: ## Run test
+	@./test.sh
