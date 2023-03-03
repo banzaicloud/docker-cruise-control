@@ -54,3 +54,10 @@ RUN \
   && chmod +x /opt/cruise-control/start.sh
 EXPOSE 8090
 CMD ["/opt/cruise-control/start.sh"]
+LABEL org.opencontainers.artifact.description="Linkedin's Cruise Control (https://github.com/linkedin/cruise-control)"
+LABEL org.opencontainers.image.url="https://github.com/banzaicloud/docker-cruise-control"
+LABEL org.opencontainers.image.documentation="https://github.com/banzaicloud/docker-cruise-control"
+LABEL org.opencontainers.image.source="https://github.com/banzaicloud/docker-cruise-control"
+LABEL org.opencontainers.image.title="Linkedin's Cruise Control"
+LABEL org.opencontainers.image.description="Cruise Control container image built for Koperator (https://github.com/banzaicloud/koperator)"
+LABEL org.opencontainers.image.vendor="Cisco Systems"

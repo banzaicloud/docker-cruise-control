@@ -39,7 +39,7 @@ services:
       retries: 30
 
   cruisecontrolmetrics:
-    image: "ghcr.io/banzaicloud/cruise-control:${CRUISE_CONTROL_VERSION}"
+    image: "${CRUISE_CONTROL_IMAGE}"
     restart: "on-failure"
     hostname: cruisecontrolmetrics
     container_name: cruisecontrolmetrics
@@ -223,7 +223,7 @@ services:
       retries: 30
 
   cruisecontrol:
-    image: "ghcr.io/banzaicloud/cruise-control:${CRUISE_CONTROL_VERSION}"
+    image: "${CRUISE_CONTROL_IMAGE}"
     restart: unless-stopped
     hostname: cruisecontrol
     container_name: cruisecontrol

@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly CRUISE_CONTROL_VERSION="${CRUISE_CONTROL_VERSION:?'Cruise Control version must be set!'}"
+readonly CRUISE_CONTROL_IMAGE="${CRUISE_CONTROL_IMAGE:?'Cruise Control image must be set!'}"
 readonly DOCKER_COMPOSE_PROJECT_NAME="${DOCKER_COMPOSE_PROJECT_NAME:-docker-cruise-control-test}"
 readonly DOCKER_COMPOSE_PROJECT_DIR="${DOCKER_COMPOSE_PROJECT_DIR:-./deploy}"
 readonly USE_EXISTING="${USE_EXISTING:-false}"
