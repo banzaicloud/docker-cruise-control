@@ -33,8 +33,8 @@ build: ## Build Cruise Control container image
 		--label "org.opencontainers.image.ref.name=$(GIT_REF)" \
 		.
 
-.PHONY: up
-up: ## Start test environment
+.PHONY: start
+start: ## Start test environment
 	@docker compose \
 		--project-name "$(DOCKER_COMPOSE_PROJECT_NAME)" \
 		--project-directory "$(DOCKER_COMPOSE_PROJECT_DIR)" \
@@ -43,8 +43,8 @@ up: ## Start test environment
 		--timeout "$(DOCKER_COMPOSE_TIMEOUT)" \
 		--wait
 
-.PHONY: down
-down: ## Stop test environment
+.PHONY: stop
+stop: ## Stop test environment
 	@docker compose \
 		--project-name "$(DOCKER_COMPOSE_PROJECT_NAME)" \
 		--project-directory "$(DOCKER_COMPOSE_PROJECT_DIR)" \
@@ -71,5 +71,5 @@ cruise-control-version: ## Print Cruise Control version
 	@printf 'version=%s\n' "$(CRUISE_CONTROL_VERSION)"
 
 .PHONY: cruise-control-version
-cruise-control-ui-version: ## Print Cruise Control version
+cruise-control-ui-version: ## Print Cruise Control UI version
 	@printf 'version=%s\n' "$(CRUISE_CONTROL_UI_GIT_REF)"
