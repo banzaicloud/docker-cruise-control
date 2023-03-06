@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - "[0-9].[0-9]+.[0-9]+*"
+  pull_request:
+    branches:
+      - 'master'
+
+env:
+  PLATFORMS: linux/amd64
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      cruise_control_version: ${{ steps.version.outputs.version }}
+      cruise_control_ui_version: ${{ steps.ui-version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Cruise Control version
+        id: version
+        run: make cruise-control-version >> "${GITHUB_OUTPUT}"
+
+      - name: Get Cruise Control UI version
+        id: ui-version
+        run: make cruise-control-ui-version >> "${GITHUB_OUTPUT}"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          flavor: |
+            latest=false
+          images: |
+            ghcr.io/banzaicloud/cruise-control
+          tags: |
+            type=sha,enable=true,format=short,prefix=
+
+      - name: Build Cruise Control container image
+        uses: docker/build-push-action@v4
+        with:
+          build-args: |
+            CRUISE_CONTROL_VERSION=${{ steps.version.outputs.version }}
+            CRUISE_CONTROL_UI_GIT_REF=${{ steps.ui-version.outputs.version }}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: ${{ env.PLATFORMS }}
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run tests
+        run: make test
+        env:
+          CI: true
+          CRUISE_CONTROL_IMAGE: ${{ steps.meta.outputs.tags }}
+          READINESS_TIMEOUT: 3600
+
+  publish:
+    if: ${{ github.event_name != 'pull_request' }}
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          flavor: |
+            latest=false
+          images: |
+            ghcr.io/banzaicloud/cruise-control
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Publish Cruise Control container image
+        uses: docker/build-push-action@v4
+        with:
+          build-args: |
+            CRUISE_CONTROL_VERSION=${{ needs.build.outputs.cruise_control_version }}
+            CRUISE_CONTROL_UI_GIT_REF=${{ needs.build.outputs.cruise_control_ui_version }}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: ${{ env.PLATFORMS }}
+          push: ${{ github.event_name != 'pull_request' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
