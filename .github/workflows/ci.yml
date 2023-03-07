@@ -11,6 +11,14 @@ on:
       - 'master'
 
 env:
+  CONTAINER_LABELS: |
+    org.opencontainers.artifact.description=Linkedin's Cruise Control (https://github.com/linkedin/cruise-control)
+    org.opencontainers.image.url=https://github.com/banzaicloud/docker-cruise-control
+    org.opencontainers.image.documentation=https://github.com/banzaicloud/docker-cruise-control
+    org.opencontainers.image.source=https://github.com/banzaicloud/docker-cruise-control
+    org.opencontainers.image.title=Linkedin's Cruise Control for Koperator
+    org.opencontainers.image.description=Linkedin's Cruise Control container image built for Koperator (https://github.com/banzaicloud/koperator)
+    org.opencontainers.image.vendor=Cisco Systems
   PLATFORMS: linux/amd64
 
 jobs:
@@ -47,6 +55,7 @@ jobs:
             ghcr.io/banzaicloud/cruise-control
           tags: |
             type=sha,enable=true,format=short,prefix=
+          labels: ${{ env.CONTAINER_LABELS }}
 
       - name: Build Cruise Control container image
         uses: docker/build-push-action@v4
@@ -55,6 +64,7 @@ jobs:
             CRUISE_CONTROL_VERSION=${{ steps.version.outputs.version }}
             CRUISE_CONTROL_UI_GIT_REF=${{ steps.ui-version.outputs.version }}
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ env.PLATFORMS }}
           push: false
           load: true
@@ -84,12 +94,13 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           flavor: |
-            latest=false
+            latest=auto
           images: |
             ghcr.io/banzaicloud/cruise-control
           tags: |
             type=semver,pattern={{version}}
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=edge,branch=master
+          labels: ${{ env.CONTAINER_LABELS }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -105,6 +116,7 @@ jobs:
             CRUISE_CONTROL_VERSION=${{ needs.build.outputs.cruise_control_version }}
             CRUISE_CONTROL_UI_GIT_REF=${{ needs.build.outputs.cruise_control_ui_version }}
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ env.PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=gha
