@@ -3,7 +3,7 @@ SHELL = /usr/bin/env bash -o pipefail
 
 CI ?= false
 PROJECT_DIR := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
-CRUISE_CONTROL_VERSION ?= 2.5.113
+CRUISE_CONTROL_VERSION ?= 2.5.123
 CRUISE_CONTROL_UI_GIT_REF ?= b1208a6f020c21ff967297814c2e893eed3f3183
 DOCKER_COMPOSE_PROJECT_NAME := "docker-cruise-control"
 DOCKER_COMPOSE_PROJECT_DIR := "./deploy"

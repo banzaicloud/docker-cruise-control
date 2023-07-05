@@ -6,7 +6,7 @@ readonly CRUISE_CONTROL_IMAGE="${CRUISE_CONTROL_IMAGE:?'Cruise Control image mus
 readonly DOCKER_COMPOSE_PROJECT_NAME="${DOCKER_COMPOSE_PROJECT_NAME:-docker-cruise-control-test}"
 readonly DOCKER_COMPOSE_PROJECT_DIR="${DOCKER_COMPOSE_PROJECT_DIR:-./deploy}"
 readonly USE_EXISTING="${USE_EXISTING:-false}"
-readonly TIMEOUT=120
+readonly TIMEOUT=220
 readonly CRUISE_CONTROL_CONTAINER_NAME="cruisecontrol"
 
 readonly STATUS_QUERY='[[.AnalyzerState.isProposalReady,
