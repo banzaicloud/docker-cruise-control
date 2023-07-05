@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.6_10-jdk as cruisecontrol
+FROM eclipse-temurin:17.0.7_7-jdk as cruisecontrol
 ARG CRUISE_CONTROL_VERSION
 WORKDIR /
 USER root
@@ -21,7 +21,7 @@ RUN \
   && mv -v /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter-*.jar \
     /cruise-control/cruise-control/build/dependant-libs/cruise-control-metrics-reporter.jar
 
-FROM node:18.14-buster as cruisecontrol-ui
+FROM node:20.3.1-buster as cruisecontrol-ui
 ARG CRUISE_CONTROL_UI_GIT_REF
 WORKDIR /
 RUN \
@@ -34,7 +34,7 @@ RUN \
   && npm install \
   && npm run build
 
-FROM eclipse-temurin:17.0.6_10-jre
+FROM eclipse-temurin:17.0.7_7-jre
 ENV CRUISE_CONTROL_LIBS="/var/lib/cruise-control-ext-libs/*"
 ENV CLASSPATH="${CRUISE_CONTROL_LIBS}"
 RUN \
